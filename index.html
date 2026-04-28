@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navalha & Co. — Barbearia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --preto: #0a0a0a;
+    --ouro: #c9a84c;
+    --ouro-claro: #e8c97a;
+    --creme: #f5f0e8;
+    --cinza: #1a1a1a;
+    --cinza-medio: #2a2a2a;
+    --texto-suave: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--preto);
+    color: var(--creme);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--ouro);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--creme); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav ul a {
+    color: var(--creme);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.75;
+    transition: opacity .2s, color .2s;
+  }
+
+  nav ul a:hover { opacity: 1; color: var(--ouro); }
+
+  .nav-cta {
+    background: var(--ouro);
+    color: var(--preto) !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    opacity: 1 !important;
+    font-weight: 500;
+    transition: background .2s !important;
+  }
+
+  .nav-cta:hover { background: var(--ouro-claro) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 60px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 50%);
+  }
+
+  .hero-linha {
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.2), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 620px;
+    animation: fadeUp .8s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ouro);
+    margin-bottom: 28px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--ouro);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1.0;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--ouro);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--texto-suave);
+    max-width: 440px;
+    margin-bottom: 48px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ouro);
+    color: var(--preto);
+    padding: 16px 32px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background .2s, transform .2s;
+  }
+
+  .btn-primary:hover { background: var(--ouro-claro); transform: translateY(-2px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--creme);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+  }
+
+  .btn-ghost:hover { opacity: 1; }
+
+  .hero-stats {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    animation: fadeUp .8s .2s ease both;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--ouro);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    margin-top: 4px;
+  }
+
+  /* FAIXA */
+  .faixa {
+    background: var(--ouro);
+    padding: 18px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .faixa-inner {
+    display: inline-flex;
+    gap: 48px;
+    animation: slide 20s linear infinite;
+  }
+
+  .faixa-item {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--preto);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .faixa-item::after {
+    content: '◆';
+    font-size: 8px;
+  }
+
+  /* SERVIÇOS */
+  .servicos {
+    padding: 120px 60px;
+    background: var(--cinza);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ouro);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .section-desc {
+    max-width: 320px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--texto-suave);
+    text-align: right;
+  }
+
+  .servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .servico-card {
+    background: var(--cinza-medio);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background .3s;
+    cursor: default;
+  }
+
+  .servico-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--ouro);
+    transition: width .4s ease;
+  }
+
+  .servico-card:hover::before { width: 100%; }
+  .servico-card:hover { background: #222; }
+
+  .servico-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.08);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .servico-nome {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .servico-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--texto-suave);
+    margin-bottom: 28px;
+  }
+
+  .servico-preco {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ouro);
+  }
+
+  .servico-preco span {
+    font-size: 14px;
+    color: var(--texto-suave);
+  }
+
+  /* SOBRE */
+  .sobre {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .sobre-visual {
+    position: relative;
+  }
+
+  .sobre-img-box {
+    background: var(--cinza-medio);
+    aspect-ratio: 3/4;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sobre-img-placeholder {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: rgba(201,168,76,0.15);
+    font-weight: 900;
+  }
+
+  .sobre-badge {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    width: 140px;
+    height: 140px;
+    background: var(--ouro);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--preto);
+  }
+
+  .sobre-badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .sobre-badge-texto {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .sobre-content .section-tag { margin-bottom: 16px; }
+
+  .sobre-content h2 { margin-bottom: 24px; }
+
+  .sobre-texto {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--texto-suave);
+    margin-bottom: 40px;
+  }
+
+  .sobre-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sobre-lista li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    color: var(--creme);
+  }
+
+  .sobre-lista li::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--ouro);
+    flex-shrink: 0;
+  }
+
+  /* DEPOIMENTOS */
+  .depoimentos {
+    padding: 120px 60px;
+    background: var(--cinza);
+  }
+
+  .dep-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .dep-card {
+    background: var(--cinza-medio);
+    padding: 40px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .dep-aspas {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: var(--ouro);
+    line-height: .8;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  .dep-texto {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--texto-suave);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  .dep-autor {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .dep-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--ouro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--preto);
+  }
+
+  .dep-nome {
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .dep-sub {
+    font-size: 12px;
+    color: var(--texto-suave);
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 100% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+
+  .cta-section h2 {
+    font-size: clamp(36px, 5vw, 64px);
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .cta-section p {
+    font-size: 16px;
+    color: var(--texto-suave);
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .cta-wpp {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #25D366;
+    color: #fff;
+    padding: 18px 40px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+  }
+
+  .cta-wpp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(37,211,102,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--cinza);
+    padding: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ouro);
+  }
+
+  .footer-logo span { color: var(--creme); }
+
+  .footer-info {
+    font-size: 13px;
+    color: var(--texto-suave);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-social a {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--texto-suave);
+    text-decoration: none;
+    font-size: 14px;
+    transition: border-color .2s, color .2s;
+  }
+
+  .footer-social a:hover { border-color: var(--ouro); color: var(--ouro); }
+
+  /* ANIMAÇÕES */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav ul { display: none; }
+    .hero { padding: 0 24px; padding-top: 100px; }
+    .hero-stats { display: none; }
+    .faixa-inner { animation-duration: 12s; }
+    .servicos { padding: 80px 24px; }
+    .servicos-grid { grid-template-columns: 1fr; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .section-desc { text-align: left; }
+    .sobre { padding: 80px 24px; grid-template-columns: 1fr; }
+    .depoimentos { padding: 80px 24px; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .cta-section { padding: 80px 24px; }
+    footer { padding: 40px 24px; flex-direction: column; gap: 24px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Navalha <span>& Co.</span></a>
+  <ul>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#depoimentos">Clientes</a></li>
+    <li><a href="#agendar" class="nav-cta">Agendar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-linha"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Desde 2018 — Belo Horizonte</div>
+    <h1>Arte<br>em cada<br><em>corte.</em></h1>
+    <p class="hero-sub">Mais que uma barbearia — um ritual. Cada detalhe pensado para o homem que valoriza o próprio estilo.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5531999999999" target="_blank" class="btn-primary">
+        Agendar agora →
+      </a>
+      <a href="#servicos" class="btn-ghost">Ver serviços ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">4.9</div>
+      <div class="stat-label">Avaliação média</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2k+</div>
+      <div class="stat-label">Clientes atendidos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Anos de experiência</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAIXA -->
+<div class="faixa">
+  <div class="faixa-inner">
+    <span class="faixa-item">Corte Masculino</span>
+    <span class="faixa-item">Barba Completa</span>
+    <span class="faixa-item">Pigmentação</span>
+    <span class="faixa-item">Sobrancelha</span>
+    <span class="faixa-item">Hidratação Capilar</span>
+    <span class="faixa-item">Relaxamento</span>
+    <span class="faixa-item">Corte Masculino</span>
+    <span class="faixa-item">Barba Completa</span>
+    <span class="faixa-item">Pigmentação</span>
+    <span class="faixa-item">Sobrancelha</span>
+    <span class="faixa-item">Hidratação Capilar</span>
+    <span class="faixa-item">Relaxamento</span>
+  </div>
+</div>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">O que oferecemos</div>
+      <h2>Nossos<br>Serviços</h2>
+    </div>
+    <p class="section-desc">Técnicas refinadas, produtos premium e profissionais apaixonados pelo que fazem.</p>
+  </div>
+
+  <div class="servicos-grid">
+    <div class="servico-card">
+      <div class="servico-num">01</div>
+      <div class="servico-nome">Corte Masculino</div>
+      <div class="servico-desc">Corte personalizado ao seu estilo, com acabamento preciso e lavagem inclusa.</div>
+      <div class="servico-preco">R$ 45 <span>/ sessão</span></div>
+    </div>
+    <div class="servico-card">
+      <div class="servico-num">02</div>
+      <div class="servico-nome">Barba Completa</div>
+      <div class="servico-desc">Modelagem, navalha quente e hidratação. A barba que você sempre quis ter.</div>
+      <div class="servico-preco">R$ 35 <span>/ sessão</span></div>
+    </div>
+    <div class="servico-card">
+      <div class="servico-num">03</div>
+      <div class="servico-nome">Combo Premium</div>
+      <div class="servico-desc">Corte + barba + sobrancelha. O pacote completo para quem não abre mão do visual.</div>
+      <div class="servico-preco">R$ 70 <span>/ sessão</span></div>
+    </div>
+    <div class="servico-card">
+      <div class="servico-num">04</div>
+      <div class="servico-nome">Pigmentação</div>
+      <div class="servico-desc">Cobertura natural para falhas na barba ou cabelo. Resultado imediato e duradouro.</div>
+      <div class="servico-preco">R$ 60 <span>/ sessão</span></div>
+    </div>
+    <div class="servico-card">
+      <div class="servico-num">05</div>
+      <div class="servico-nome">Hidratação</div>
+      <div class="servico-desc">Tratamento profundo para cabelo danificado. Maciez e brilho de volta em uma sessão.</div>
+      <div class="servico-preco">R$ 50 <span>/ sessão</span></div>
+    </div>
+    <div class="servico-card">
+      <div class="servico-num">06</div>
+      <div class="servico-nome">Design de Sobrancelha</div>
+      <div class="servico-desc">Modelagem masculina que enquadra o rosto e valoriza seu traço natural.</div>
+      <div class="servico-preco">R$ 20 <span>/ sessão</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-visual">
+    <div class="sobre-img-box">
+      <div class="sobre-img-placeholder">N&C</div>
+    </div>
+    <div class="sobre-badge">
+      <div class="sobre-badge-num">6+</div>
+      <div class="sobre-badge-texto">anos de<br>história</div>
+    </div>
+  </div>
+
+  <div class="sobre-content">
+    <div class="section-tag">Quem somos</div>
+    <h2>Tradição e<br>estilo juntos.</h2>
+    <p class="sobre-texto">A Navalha & Co. nasceu em 2018 com uma missão simples: criar um espaço onde o homem se sente em casa e sai com o visual que sempre quis. Hoje somos referência em BH com mais de 2 mil clientes atendidos.</p>
+    <ul class="sobre-lista">
+      <li>Profissionais certificados e em constante atualização</li>
+      <li>Produtos nacionais e importados de alta qualidade</li>
+      <li>Agendamento fácil pelo WhatsApp, sem fila</li>
+      <li>Ambiente climatizado, Wi-Fi e café cortesia</li>
+    </ul>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos" id="depoimentos">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">O que dizem</div>
+      <h2>Clientes<br>satisfeitos</h2>
+    </div>
+  </div>
+
+  <div class="dep-grid">
+    <div class="dep-card">
+      <div class="dep-aspas">"</div>
+      <p class="dep-texto">Melhor barbearia que já fui em BH. O pessoal entende exatamente o que você quer sem precisar explicar muito. Ambiente top demais.</p>
+      <div class="dep-autor">
+        <div class="dep-avatar">R</div>
+        <div>
+          <div class="dep-nome">Rafael Souza</div>
+          <div class="dep-sub">Cliente desde 2020</div>
+        </div>
+      </div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-aspas">"</div>
+      <p class="dep-texto">Agendei pelo WhatsApp, fui atendido no horário certinho. A barba ficou perfeita. Não troco por nenhuma outra.</p>
+      <div class="dep-autor">
+        <div class="dep-avatar">M</div>
+        <div>
+          <div class="dep-nome">Marcos Ferreira</div>
+          <div class="dep-sub">Cliente desde 2021</div>
+        </div>
+      </div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-aspas">"</div>
+      <p class="dep-texto">Fiz a pigmentação e o resultado superou minha expectativa. Muito natural, parece que sempre foi assim. Recomendo demais.</p>
+      <div class="dep-autor">
+        <div class="dep-avatar">L</div>
+        <div>
+          <div class="dep-nome">Lucas Almeida</div>
+          <div class="dep-sub">Cliente desde 2022</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="agendar">
+  <div class="cta-bg"></div>
+  <h2>Pronto para o<br><em style="color:var(--ouro);font-style:italic">melhor corte</em> da sua vida?</h2>
+  <p>Agende agora pelo WhatsApp. Rápido, sem complicação.</p>
+  <a href="https://wa.me/5531999999999?text=Olá!%20Gostaria%20de%20agendar%20um%20horário." target="_blank" class="cta-wpp">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Agendar pelo WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Navalha <span>& Co.</span></div>
+  <div class="footer-info">
+    Rua dos Barbeiros, 123 — Savassi, BH<br>
+    Seg a Sáb: 9h às 20h · Dom: 9h às 14h<br>
+    (31) 99999-9999
+  </div>
+  <div class="footer-social">
+    <a href="#" title="Instagram">IG</a>
+    <a href="#" title="WhatsApp">WA</a>
+    <a href="#" title="Google">G</a>
+  </div>
+</footer>
+
+</body>
+</html>
